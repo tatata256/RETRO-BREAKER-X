@@ -17,7 +17,7 @@ const STATE = {
 
 // --- Block Grid Constants ---
 const BLOCK_W        = 48;
-const BLOCK_H        = 20;
+const BLOCK_H        = 26;
 const BLOCK_COLS     = 10;
 const BLOCK_ROWS     = 15;
 const BLOCK_OFFSET_X = 0;
@@ -40,7 +40,7 @@ let scoreX2Timer        = 0;
 let slowTimer           = 0;
 let fireballTimer       = 0;
 let shieldActive        = false;
-let shieldY             = H - 70;
+let shieldY             = H - 30;
 let readyTimer          = 0;
 let stageTransitionTimer = 0;
 

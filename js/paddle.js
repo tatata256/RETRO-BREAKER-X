@@ -5,10 +5,10 @@
 
 const paddle = {
   x: W / 2,
-  y: H - 90,
+  y: H - 50,
   width: 80,
   baseWidth: 80,
-  height: 12,
+  height: 20,
   speed: 8,
   widthMultiplier: 1,
   shrinkTimers: [],
