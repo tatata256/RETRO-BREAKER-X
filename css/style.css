@@ -22,7 +22,7 @@ body {
 #gameWrapper {
   position: relative;
   width: 480px;
-  height: 640px;
+  height: 560px;
   border: 2px solid #00ff88;
   box-shadow:
     0 0 20px rgba(0, 255, 136, 0.3),
@@ -55,7 +55,7 @@ canvas {
 @media (max-width: 520px) {
   #gameWrapper {
     width: 100vw;
-    height: calc(100vw * 640 / 480);
+    height: calc(100vw * 560 / 480);
     max-height: 100vh;
     border: none;
   }
