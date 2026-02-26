@@ -11,6 +11,17 @@ let touchActive = false;
 document.addEventListener('keydown', e => {
   keys[e.key] = true;
 
+  // --- Hidden dev command: type "dev" on title screen ---
+  if (gameState === STATE.TITLE && e.key.length === 1) {
+    devInputBuf += e.key.toLowerCase();
+    if (devInputBuf.length > 10) devInputBuf = devInputBuf.slice(-10);
+    if (devInputBuf.endsWith('dev')) {
+      devMode = !devMode;
+      devInputBuf = '';
+      console.log('%c[DEV MODE] ' + (devMode ? 'ON' : 'OFF'), 'color:#0f0;font-weight:bold');
+    }
+  }
+
   // Pause toggle
   if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
     if (gameState === STATE.PLAYING)    { gameState = STATE.PAUSED;  audio.stopBGM(); }
@@ -46,6 +57,7 @@ canvas.addEventListener('mousemove', e => {
 canvas.addEventListener('click', e => {
   audio.init();
   if (gameState === STATE.TITLE)     { startGame(); return; }
+  if (gameState === STATE.PLAYING && devMode) { devClearStage(); return; }
   if (gameState === STATE.PLAYING)   { launchBall(); return; }
   if (gameState === STATE.GAMEOVER && !rankingNameInput) { gameState = STATE.TITLE; return; }
   if (gameState === STATE.STAGECLEAR) { nextStage(); return; }

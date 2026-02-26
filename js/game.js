@@ -65,3 +65,14 @@ function checkStageComplete() {
     }
   }
 }
+
+// --- Developer: instant stage clear ---
+function devClearStage() {
+  if (!devMode) return;
+  if (isBossStage && boss) {
+    boss.alive = false;
+  } else {
+    blocks.forEach(b => { b.alive = false; });
+  }
+  checkStageComplete();
+}

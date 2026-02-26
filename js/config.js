@@ -42,3 +42,7 @@ let shieldActive        = false;
 let shieldY             = H - 30;
 let readyTimer          = 0;
 let stageTransitionTimer = 0;
+
+// --- Developer Mode (hidden) ---
+let devMode      = false;
+let devInputBuf  = '';
