@@ -22,6 +22,7 @@ const BLOCK_COLS     = 10;
 const BLOCK_ROWS     = 15;
 const BLOCK_OFFSET_X = 0;
 const BLOCK_OFFSET_Y = 50;
+const STATUS_BAR_H   = 42;
 
 // --- Physics ---
 const DT = 16.67;  // ms per frame at 60 fps

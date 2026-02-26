@@ -31,7 +31,7 @@ class Ball {
     // Wall collisions
     if (this.x - this.radius < 0) { this.x = this.radius;     this.vx = Math.abs(this.vx); }
     if (this.x + this.radius > W) { this.x = W - this.radius;  this.vx = -Math.abs(this.vx); }
-    if (this.y - this.radius < 0) { this.y = this.radius;      this.vy = Math.abs(this.vy); }
+    if (this.y - this.radius < STATUS_BAR_H) { this.y = STATUS_BAR_H + this.radius; this.vy = Math.abs(this.vy); }
 
     // Shield collision
     if (shieldActive && this.vy > 0 &&
