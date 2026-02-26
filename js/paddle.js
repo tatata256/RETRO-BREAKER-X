@@ -5,7 +5,7 @@
 
 const paddle = {
   x: W / 2,
-  y: H - 50,
+  y: H - 90,
   width: 80,
   baseWidth: 80,
   height: 12,

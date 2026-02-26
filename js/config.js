@@ -40,7 +40,7 @@ let scoreX2Timer        = 0;
 let slowTimer           = 0;
 let fireballTimer       = 0;
 let shieldActive        = false;
-let shieldY             = H - 30;
+let shieldY             = H - 70;
 let readyTimer          = 0;
 let stageTransitionTimer = 0;
 
