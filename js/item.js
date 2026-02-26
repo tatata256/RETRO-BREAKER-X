@@ -10,7 +10,10 @@ const ITEM_TYPES = {
   FIREBALL:  { label: '🔥',  color: '#ff4400', desc: 'FIRE' },
   SHIELD:    { label: '━━', color: '#00ffff', desc: 'SHIELD' },
   SCORE2X:   { label: '×2',  color: '#ffff00', desc: 'SCOREx2' },
+  LIFE:      { label: '❤',  color: '#ff4466', desc: 'LIFE' },
 };
+
+const MAX_LIVES = 10;
 
 class Item {
   constructor(x, y, type) {
@@ -103,6 +106,13 @@ function applyItem(type) {
       scoreX2Timer = 20000;
       activeEffects.push({ name: 'SCOREx2', timer: 20000 });
       break;
+
+    case 'LIFE':
+      if (lives < MAX_LIVES) {
+        lives++;
+        spawnParticles(paddle.x, paddle.y, '#ff4466', 20);
+      }
+      break;
   }
 }
 
@@ -116,7 +126,7 @@ function dropItem(x, y, blockType) {
     if (blockType === 'POISON') {
       possibleItems = ['SHRINK'];
     } else {
-      possibleItems = ['EXPAND', 'MULTIBALL', 'FIREBALL', 'SHIELD', 'SCORE2X'];
+      possibleItems = ['EXPAND', 'MULTIBALL', 'FIREBALL', 'SHIELD', 'SCORE2X', 'LIFE'];
     }
     const type = possibleItems[Math.floor(Math.random() * possibleItems.length)];
     items.push(new Item(x, y, type));
