@@ -48,6 +48,10 @@ function update() {
     balls.forEach(b => { if (b.active && !b.stuck) boss.checkHit(b); });
   }
 
+  // Boss bullets
+  bossBullets.forEach(b => b.update());
+  bossBullets = bossBullets.filter(b => b.active);
+
   // Blocks
   blocks.forEach(b => b.update(DT));
 

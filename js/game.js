@@ -10,6 +10,7 @@ function startGame() {
   stage    = 1;
   combo    = 0;
   maxCombo = 0;
+  bossBullets = [];
   paddle.reset();
   generateStage(stage);
   resetBall();
@@ -20,6 +21,7 @@ function startGame() {
 
 function nextStage() {
   stage++;
+  bossBullets = [];
   if (stage > 16) {
     // All stages cleared!
     gameState        = STATE.GAMEOVER;

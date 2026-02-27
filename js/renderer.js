@@ -29,6 +29,7 @@ function drawGame() {
   drawStatusBar();
   blocks.forEach(b => b.draw(ctx));
   if (boss) boss.draw(ctx);
+  bossBullets.forEach(b => b.draw(ctx));
   items.forEach(i => i.draw(ctx));
 
   // Shield line
