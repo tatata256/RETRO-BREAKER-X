@@ -11,7 +11,7 @@ function update() {
   // Ready countdown
   if (gameState === STATE.READY) {
     readyTimer--;
-    paddle.x += (mouseX - paddle.x) * 0.15;
+    if (mouseActive || touchActive) paddle.x += (mouseX - paddle.x) * 0.15;
     if (keys['ArrowLeft'])  paddle.x -= paddle.speed;
     if (keys['ArrowRight']) paddle.x += paddle.speed;
     paddle.update();
@@ -31,7 +31,7 @@ function update() {
   activeEffects = activeEffects.filter(e => { e.timer -= DT; return e.timer > 0; });
 
   // Paddle
-  paddle.x += (mouseX - paddle.x) * 0.15;
+  if (mouseActive || touchActive) paddle.x += (mouseX - paddle.x) * 0.15;
   if (keys['ArrowLeft'])  paddle.x -= paddle.speed;
   if (keys['ArrowRight']) paddle.x += paddle.speed;
   paddle.update();

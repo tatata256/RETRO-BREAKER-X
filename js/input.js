@@ -6,10 +6,12 @@
 const keys = {};
 let mouseX      = W / 2;
 let touchActive = false;
+let mouseActive = false;
 
 // --- Keyboard ---
 document.addEventListener('keydown', e => {
   keys[e.key] = true;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') mouseActive = false;
 
   // --- Hidden dev command: type "dev" on title screen ---
   if (gameState === STATE.TITLE && e.key.length === 1) {
@@ -52,6 +54,7 @@ document.addEventListener('keyup', e => { keys[e.key] = false; });
 canvas.addEventListener('mousemove', e => {
   const rect = canvas.getBoundingClientRect();
   mouseX = (e.clientX - rect.left) / rect.width * W;
+  mouseActive = true;
 });
 
 canvas.addEventListener('click', e => {
