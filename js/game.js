@@ -50,6 +50,18 @@ function loseLife() {
   shieldActive = false;
 }
 
+// Called when a boss bullet hits the paddle — deducts life but keeps ball in play
+function bulletHit() {
+  lives--;
+  audio.sfxMiss();
+  if (lives <= 0) {
+    gameState        = STATE.GAMEOVER;
+    audio.stopBGM();
+    rankingNameInput = true;
+    nameInputText    = '';
+  }
+}
+
 function checkStageComplete() {
   if (isBossStage) {
     if (boss && !boss.alive) {

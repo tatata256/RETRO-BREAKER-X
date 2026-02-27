@@ -282,14 +282,14 @@ class BossBullet {
       return;
     }
 
-    // Hit paddle → lose a life
+    // Hit paddle → lose a life (ball continues)
     if (this.y + this.radius >= paddle.y &&
         this.y - this.radius <= paddle.y + paddle.height &&
         this.x >= paddle.x - paddle.drawWidth / 2 &&
         this.x <= paddle.x + paddle.drawWidth / 2) {
       this.active = false;
       spawnParticles(this.x, this.y, this.color, 10);
-      loseLife();
+      bulletHit();
     }
 
     // Hit shield
