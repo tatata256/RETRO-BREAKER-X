@@ -3,6 +3,23 @@
    ============================================================ */
 'use strict';
 
+// --- Preload boss images ---
+const bossImages = {};
+{
+  const imgDefs = {
+    GATEKEEPER: 'img/boss/GATEKEEPER.png',
+    PHANTOM:    'img/boss/PHANTOM.png',
+    CHAOSCORE:  'img/boss/CHAOSCORE（本体）.png',
+    CHAOSCORE_CORE1: 'img/boss/CHAOSCORE（サブコア1）.png',
+    CHAOSCORE_CORE2: 'img/boss/CHAOSCORE（サブコア2）.png',
+  };
+  for (const [key, src] of Object.entries(imgDefs)) {
+    const img = new Image();
+    img.src = src;
+    bossImages[key] = img;
+  }
+}
+
 class Boss {
   constructor(type) {
     this.type       = type;
@@ -218,39 +235,54 @@ class Boss {
     if (this.invulnTimer > 0 && this.invulnTimer % 4 < 2) alpha = 0.3;
     ctx.globalAlpha = alpha;
 
-    let color;
-    switch (this.type) {
-      case 'GATEKEEPER': color = '#ff4444'; break;
-      case 'PHANTOM':    color = '#9944ff'; break;
-      case 'CHAOSCORE':  color = this.phase === 3 ? '#ff8800' : '#ff2200'; break;
+    // Draw boss body as image
+    const img = bossImages[this.type];
+    if (img && img.complete && img.naturalWidth > 0) {
+      ctx.drawImage(img, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+    } else {
+      // Fallback rectangle
+      let color;
+      switch (this.type) {
+        case 'GATEKEEPER': color = '#ff4444'; break;
+        case 'PHANTOM':    color = '#9944ff'; break;
+        case 'CHAOSCORE':  color = '#ff2200'; break;
+      }
+      ctx.fillStyle = color;
+      ctx.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+      ctx.strokeRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+      ctx.fillStyle = '#ffffff'; ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
+      const names = { GATEKEEPER: 'GATE KEEPER', PHANTOM: 'PHANTOM', CHAOSCORE: 'CHAOS CORE' };
+      ctx.fillText(names[this.type], this.x, this.y + 2);
     }
 
-    // Body
-    ctx.fillStyle = color;
-    ctx.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-    ctx.strokeRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-
-    // Name
-    ctx.fillStyle = '#ffffff'; ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
-    const names = { GATEKEEPER: 'GATE KEEPER', PHANTOM: 'PHANTOM', CHAOSCORE: 'CHAOS CORE' };
-    ctx.fillText(names[this.type], this.x, this.y + 2);
-
-    // Phase 3 sub-cores
+    // Phase 3 sub-cores (images)
     if (this.type === 'CHAOSCORE' && this.phase === 3) {
-      this.cores.forEach(c => {
-        ctx.fillStyle = '#ff6600';
-        ctx.fillRect(c.x - 15, c.y - 10, 30, 20);
-        ctx.strokeRect(c.x - 15, c.y - 10, 30, 20);
+      this.cores.forEach((c, i) => {
+        const coreImg = bossImages['CHAOSCORE_CORE' + (i + 1)];
+        if (coreImg && coreImg.complete && coreImg.naturalWidth > 0) {
+          ctx.drawImage(coreImg, c.x - 15, c.y - 10, 30, 20);
+        } else {
+          ctx.fillStyle = '#ff6600';
+          ctx.fillRect(c.x - 15, c.y - 10, 30, 20);
+          ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+          ctx.strokeRect(c.x - 15, c.y - 10, 30, 20);
+        }
       });
     }
     ctx.globalAlpha = 1;
 
     // HP bar
+    let hpColor;
+    switch (this.type) {
+      case 'GATEKEEPER': hpColor = '#ff4444'; break;
+      case 'PHANTOM':    hpColor = '#9944ff'; break;
+      case 'CHAOSCORE':  hpColor = this.phase === 3 ? '#ff8800' : '#ff2200'; break;
+    }
     const barW = 200, barH = 8;
     const barX = W / 2 - barW / 2, barY = 30;
     ctx.fillStyle = '#333';  ctx.fillRect(barX, barY, barW, barH);
-    ctx.fillStyle = color;   ctx.fillRect(barX, barY, barW * (this.hp / this.maxHp), barH);
+    ctx.fillStyle = hpColor; ctx.fillRect(barX, barY, barW * (this.hp / this.maxHp), barH);
     ctx.strokeStyle = '#fff'; ctx.lineWidth = 1;
     ctx.strokeRect(barX, barY, barW, barH);
     ctx.fillStyle = '#fff'; ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
