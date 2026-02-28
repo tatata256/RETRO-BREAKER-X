@@ -3,6 +3,14 @@
    ============================================================ */
 'use strict';
 
+// --- Preload block images ---
+const blockImages = {};
+{
+  const img = new Image();
+  img.src = 'img/block/explosive.png';
+  blockImages.ARMOR = img;
+}
+
 const BLOCK_TYPES = {
   NORMAL:   { name: 'Normal',   color: '#888888', hp: 1, dropRate: 0.10, score: 100 },
   ARMOR:    { name: 'Armor',    color: '#c0c0c0', hp: 3, dropRate: 0.20, score: 300 },
@@ -76,8 +84,13 @@ class Block {
 
     // Special visual indicators
     if (this.type === 'ARMOR') {
-      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
-      ctx.strokeRect(bx + 3, by + 3, BLOCK_W - 6, BLOCK_H - 6);
+      const aImg = blockImages.ARMOR;
+      if (aImg && aImg.complete && aImg.naturalWidth > 0) {
+        ctx.drawImage(aImg, bx + 1, by + 1, BLOCK_W - 2, BLOCK_H - 2);
+      } else {
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+        ctx.strokeRect(bx + 3, by + 3, BLOCK_W - 6, BLOCK_H - 6);
+      }
     }
     if (this.type === 'GOLD') {
       ctx.strokeStyle = '#fff700'; ctx.lineWidth = 2;
