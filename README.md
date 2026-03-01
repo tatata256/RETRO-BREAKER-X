@@ -74,25 +74,36 @@
 ## プロジェクト構成
 
 ```
-├── index.html          # エントリーポイント
+├── index.html              # エントリーポイント（scriptタグで依存順に読み込み）
 ├── css/
-│   └── style.css       # スタイルシート
+│   └── style.css           # スタイルシート（CRTエフェクト・レスポンシブ）
 ├── js/
-│   ├── config.js       # 定数・状態変数
-│   ├── audio.js        # オーディオエンジン
-│   ├── particle.js     # パーティクル演出
-│   ├── paddle.js       # パドル
-│   ├── ball.js         # ボール
-│   ├── block.js        # ブロック定義
-│   ├── item.js         # アイテム
-│   ├── boss.js         # ボス
-│   ├── stage.js        # ステージ生成
-│   ├── collision.js    # 衝突判定
-│   ├── ranking.js      # ランキング
-│   ├── input.js        # 入力制御
-│   ├── game.js         # ゲーム進行
-│   ├── renderer.js     # 描画処理
-│   └── main.js         # メインループ
+│   ├── config.js           # 定数・グローバル状態変数
+│   ├── audio.js            # オーディオエンジン（BGM・SE）
+│   ├── particle.js         # パーティクル演出
+│   ├── paddle.js           # パドル制御
+│   ├── ball.js             # ボール制御・壁／パドル衝突
+│   ├── block.js            # ブロック定義・画像プリロード
+│   ├── item.js             # アイテム定義・効果適用
+│   ├── boss.js             # ボス定義・攻撃パターン・画像プリロード
+│   ├── stage.js            # ステージ生成ロジック
+│   ├── collision.js        # ブロック衝突判定・破壊処理
+│   ├── ranking.js          # ローカルランキング（localStorage）
+│   ├── input.js            # キーボード・マウス・タッチ入力
+│   ├── game.js             # ゲーム進行管理（ライフ・ステージ遷移）
+│   ├── renderer.js         # 全画面描画処理
+│   └── main.js             # メインループ（固定タイムステップ）
+├── img/
+│   ├── block/
+│   │   └── explosive.png   # Armorブロック画像
+│   ├── boss/
+│   │   ├── GATEKEEPER.png
+│   │   ├── PHANTOM.png
+│   │   ├── CHAOSCORE（本体）.png
+│   │   ├── CHAOSCORE（サブコア1）.png
+│   │   └── CHAOSCORE（サブコア2）.png
+│   └── item/
+│       └── Multi_Ball.png  # マルチボールアイテム画像
 └── README.md
 ```
 
